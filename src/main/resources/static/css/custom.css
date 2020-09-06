@@ -1,0 +1,63 @@
+html{
+font-family: -apple-system,BlinkMacSystemFont,'Segoe UI', 'Helvetica Neue', Arial,sans-serif;
+}
+
+.top{
+ margin: 0px 10px 10px 10px;
+}
+
+.breadcrumb{
+ height:20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.breadcrumbPoint{
+    display: inline-block;
+    text-align: center;
+    padding-left: .857rem;
+    padding-right: .857rem;
+    font-size: 14px;
+    color: #9e9e9e;
+}
+
+.main{
+	padding-top:10px; 
+	margin-left:20px; 
+	margin-right: 20px;
+}
+
+.mainheader{
+	font-size: 34px; 
+	font-weight: 500; 
+	color: #2e2e2e;
+}
+
+.clickableLink{
+    cursor : pointer;
+    font-size:14px;
+    color: 02629f
+}
+
+.breakcrumbTitle{
+   display: inline-block; 
+   text-align: center; 
+   font-size: 14px;
+}
+
+.summaryTextDetail{
+    font-family:HelveticaNeue-Thin, Helvetica Neue Thin, Helvetica Neue, Roboto Thin, Roboto, Segoe UI Light, Segoe UI, sans-serif-thin;
+    font-size:14px;
+    color:black;
+    display: block;
+}
+
+.summaryTextValue{
+    font-family:HelveticaNeue-Thin, Helvetica Neue Thin, Helvetica Neue, Roboto Thin, Roboto, Segoe UI Light, Segoe UI, sans-serif-thin;
+    font-size:20px;
+    /*color:rgba(22, 21, 19, 0.6); */
+    white-space: nowrap;
+    display: block;
+}
+
+.summaryCellDetail{
+    margin:20px;
+}

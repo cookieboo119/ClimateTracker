@@ -1,0 +1,83 @@
+<html lang="en-us">
+<head>
+  <title>Station Climate Details Page</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link th:href="@{/css/custom.css}" rel="stylesheet" type="text/css">
+  
+</head>
+ 
+<body>
+<div id="detailPageJETContainer" >
+ <div class="top">
+            <table>
+                <tr>
+                    <td>
+                        <div id="breadcrumb" >
+                            <div class="breadcrumb">
+                                <a href="/main" style="text-decoration: none" ><span class="clickableLink">Climate Summary</span></a>
+                                <span class="breadcrumbPoint"> &gt; </span>
+                                <span id="name" class="breakcrumbTitle">Station Details</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td width="100%"></td>
+                </tr>
+            </table>
+ </div>
+ <div style="background-color: #FBF9F8;">
+	 <div id="mainContent" class="main">      
+	  <h1 class="mainheader" th:text="${climateData.name}"></h1>
+ 		<br/>  
+	       <table>
+                <tr>
+                    <td>
+                        <div class="summaryCellDetail">
+                          <span class="summaryTextDetail" >Station Name</oj-label>
+                          <span class="summaryTextValue" th:text="${climateData.name}"></span>  
+                        </div>
+                    </td>
+                    <td>
+                        <div class="summaryCellDetail">
+                          <span class="summaryTextDetail" >Province</oj-label>
+                          <span class="summaryTextValue" th:text="${climateData.province}"></span>  
+                        </div>
+                    </td>
+                    <td>
+                        <div class="summaryCellDetail">
+                          <span class="summaryTextDetail" >Date</oj-label>
+                          <span class="summaryTextValue" th:text="${climateData.date}"></span>  
+                        </div>
+                    </td>
+                    <td width="50%"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="summaryCellDetail">
+                          <span class="summaryTextDetail" >Average Temperature</oj-label>
+                          <span class="summaryTextValue" th:text="${climateData.meanTemp}"></span>  
+                        </div>
+                    </td>
+                    <td>
+                        <div class="summaryCellDetail">
+                          <span class="summaryTextDetail" >Highest Temperature</oj-label>
+                          <span class="summaryTextValue" th:text="${climateData.maxTemp}"></span>  
+                        </div>
+                    </td>
+                    <td>
+                        <div class="summaryCellDetail">
+                          <span class="summaryTextDetail" >Lowest Temperature</oj-label>
+                          <span class="summaryTextValue" th:text="${climateData.minTemp}"></span>  
+                        </div>
+                    </td>
+                    <td width="50%"></td>
+                </tr>
+            </table>
+	    <br/>
+	 </div>
+	</div>
+ </div>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<html lang="en-us">
+<head>
+  <title>Climate Summary Page</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link href="css/libs/oj/v8.1.0/alta/oj-alta-min.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" th:src="@{/js/libs/require/require-debug.js}"></script>
+  <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+ 
+<body>
+<div id="summaryPageJETContainer" >
+ <div style="background-color: #FBF9F8; ">
+	 <div id="mainContent" style="padding-top:20px; margin-left:20px; margin-right: 20px;">      
+	  <h1 style="font-size: 34px; font-weight: 500; color: #2e2e2e;">Climate Summary</h1>
+ 		<br/>  
+	     <oj-form-layout max-columns="3" direction="row" style="max-width: 60%;">
+	        <oj-label style="font-weight: bold;" for="condition">Filter By Date</oj-label>
+	        <oj-combobox-one id="condition" value="{{condition}}" 
+                                  label-hint="Filter By Date" style="max-width:20em">
+                      <oj-option value="between">Between</oj-option>
+                      <oj-option value="from">From</oj-option>
+                      <oj-option value="to">To</oj-option>
+                  </oj-combobox-one>
+            <div>
+	            <div  :style.display="[[condition() ==='between'? '' : 'none']]" >    
+			        <oj-label style="font-weight: bold;" for="from">From</oj-label>
+		            <oj-input-date id="from" value={{fromValue}}  required converter=[[dateConverter]] date-picker=[[datePicker]] max="[[toValue]]" style="max-width: 20rem">
+		            </oj-input-date>
+		            <oj-label style="font-weight: bold;" for="to">To</oj-label>
+		            <oj-input-date id="to" value={{toValue}} required converter=[[dateConverter]] date-picker=[[datePicker]] min="[[fromValue]]" style="max-width: 20rem">
+		            </oj-input-date>
+	            </div>
+	            <div  style="padding-top: 20px;" :style.display="[[condition() !=='between'? '' : 'none']]" >  
+	                 <oj-input-date id="dateInput" value={{value}} required converter=[[dateConverter]] date-picker=[[datePicker]]  style="max-width: 20rem">  
+	            </div>
+           </div>
+           <div>
+	       <oj-button id='filter-button' style="padding-top: 20px;" class="oj-button-md oj-button-confirm"  on-oj-action="[[applyFilter]]">Apply</oj-button>
+	       <oj-button id='clear-filter-button' style="padding-top: 20px;" class="oj-button-md"  on-oj-action="[[clearFilter]]">Clear</oj-button>
+	       </div>
+	     </oj-form-layout>
+	    <br/>
+	    
+	    <div style="float: left; display: block;">
+	        <oj-label style="padding-bottom:8px; font-weight: bold;">
+                 View By Province
+            </oj-label>
+               <oj-select-single data="{{provinceDP}}" style="min-width: 10rem"
+                on-value-changed="[[provinceChangedHandler]]" 
+                value="{{selectedProvince}}">
+              </oj-select-single>
+		</div>
+	    <div id="chartContainer" style="display: block; margin-top:50px; padding: 20px;">
+              
+              <oj-chart id="lineChart"
+                  type="line"
+                  orientation="[[orientationValue]]"
+                  data="[[graphDataProvider]]"
+                  style-defaults.line-type="curved"
+                  animation-on-display="auto"
+                  animation-on-data-change="auto"
+                  value-formats="[[valueFormatsValue]]"
+                  style="width:100%;height:350px;">
+                  <template slot="itemTemplate" data-oj-as="item">
+                    <oj-chart-item 
+                        value="[[item.data.value]]"
+                        group-id="[[ [item.data.Date]]]"
+                        series-id="[[item.data.series]]">
+                    </oj-chart-item>
+                </template>
+              </oj-chart>
+	    </div>
+	    
+	 </div>
+	</div>
+	 <div>
+	    <div style="margin-left:20px; margin-right: 20px; padding-bottom:20px;">
+             <div class="oj-flex">
+                <div class="oj-flex-item oj-sm-padding-2x-horizontal">
+                <oj-paging-control id="pagingTop" data="[[envDataProvider]]" page-size="{{pageSize}}" slot="top">
+					    </oj-paging-control></div>
+                <div class="oj-flex-item oj-sm-padding-2x-horizontal"></div>
+                <div class="oj-flex-item oj-sm-padding-2x-horizontal">
+                   <div style="float: right; margin-top: 10px;">
+                      <oj-select-single data="[[pageSizeDP]]" style="min-width: 14rem"
+		                value="{{pageSizeSelectedValue}}">
+		              </oj-select-single>
+		              </div>
+		            </div>
+              </div>
+		 	<oj-table id="dataTable" style="width:100%" aria-label="Environment Climate Summary Table"
+			                                              data='[[envDataProvider]]'
+			                                              scroll-policy="loadAll"
+			                                              columns='{{envColumnArray}}'>
+                                     <template slot="meanTempTemplate" data-oj-as="cell">
+                                       <a data-bind="text: cell.data, attr: {href: '/details/' + cell.row.id}" style="text-decoration: none" ></a>
+                                     </template>
+			</oj-table>
+	    </div>
+	 </div>
+ </div>
+</body>
+
+</html>

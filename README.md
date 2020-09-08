@@ -1,3 +1,5 @@
+# ClimateTracker
+Climate Data Tracking Tool
 
 
 ## Table of Contents
@@ -19,16 +21,16 @@
 
 ## <a id="download"></a>Download/Run
 :tada: :tada: [Download the entire project from Github here](https://github.com/cookieboo119/ClimateTracker/archive/master.zip) :tada: :tada:
-Unzip the downloaded file to a local directory. 
+Unzip the downloaded file. 
 
 #### <a id="run-on-windows"></a>Run from Windows
-If you use Windows make sure JAVA_HOME is configured, then from the unzipped root directory run command:
+If you use Windows and have JAVA_HOME configured, from the unzipped root directory run command:
 ```bash
 mvnw spring-boot:run
 ```
 
 #### <a id="run-on-mac"></a>Run from mac or linux
-If you use mac or linux, unzip master.zip, then from the unzipped root directory run command: 
+If you use mac or linux, unzip master.zip, from the unzipped root directory run command: 
 ```bash
 ./mvnw spring-boot:run
 ```
@@ -37,16 +39,13 @@ If you use mac or linux, unzip master.zip, then from the unzipped root directory
 ## <a id="application"></a>Application Explained
 
 #### <a id="access-main"></a>Main Page
-Once the application is running, access the main page with following URL: http://localhost:8080/main. If port 8080 is already in use, a different port can be specified by adding following to file ./src/main/resources/application.properties: 
-```bash
-server.port=<port>
-```
+Once the application is running, access the main page with following URL: http://localhost:8080/main 
 
-From the main page, you may filter the results by date: toggle search condition and select dates, then click on 'Apply' button. You may also click on 'Clear' button to clear the filter. Note that client side validation is applied on the date values selected or entered.
+From the main page, you may filter the results by date: toggle search condition and select dates, then click on 'Apply' button. You may click on 'Clear' button to clear the filter. Note that client side validation is applied on the date values selected/entered.
 
-There is a graph on the main page to help visualize the filtered data further by province. You may toggle between different province to view the summary data of that filtered time period. 
+There is a graph on the main page to help visualize the filtered data further by province. You may toggle between different province to view the summary data. 
 
-On the result table, you may sort the result by each of the column. Pagination is enabled on the table, where you can toggle the size of displayed table rows. 
+On the result table, you may sort the data by each of the column. Pagination is enabled, where you can toggle the size of displayed table rows. 
 
 
 
@@ -94,4 +93,8 @@ use command:
 ## <a id="design"></a>Design Diagram
 Key files and design diagram as following:
  <img src="./ClimateTracker_Design_Diagram.jpg" alt="design diagram" width="800"/>
+
+
+
+
 

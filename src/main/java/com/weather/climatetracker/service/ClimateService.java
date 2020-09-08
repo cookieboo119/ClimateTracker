@@ -14,11 +14,13 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.weather.climatetracker.controller.ClimateRESTController;
 import com.weather.climatetracker.model.ClimateData;
-
 @Service
 public class ClimateService {
     @Value("${csv.filePath}")
@@ -29,15 +31,17 @@ public class ClimateService {
     public static final String _AFTER = "after";
     public static final String _BETWEEN = "between";
 
+    Logger logger = LoggerFactory.getLogger(ClimateService.class);
+    
 	@Autowired
     private ClimateDataRepository repo;
 	
 	@PostConstruct
     private void init() throws Exception {
 		File csvFile = new File(filePath);
-		 System.out.println("Working Directory = " + System.getProperty("user.dir"));
+		logger.info("Working Directory = " + System.getProperty("user.dir"));
 		if (csvFile.isFile()) {
-			System.out.println("File exists");
+			logger.info("File exists");
 			InputStreamReader input = new InputStreamReader(new FileInputStream(filePath));
 			CSVParser csvParser = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(input);
 			long beforeTime = System.currentTimeMillis();
@@ -51,12 +55,12 @@ public class ClimateService {
 							record.get(4) == null || record.get(4).isEmpty()? null: Double.parseDouble(record.get(4)),
 							record.get(5) == null || record.get(5).isEmpty()? null: Double.parseDouble(record.get(5))));
 				} catch (ParseException e) {
-					e.printStackTrace();
+					logger.error("Exception while saving csv file to repository:", e);
 				}
 			});
 	     
-	        System.out.println("time taken: " + (System.currentTimeMillis() - beforeTime));
-			System.out.println("total row count = " + repo.count());
+	        logger.info("time taken: " + (System.currentTimeMillis() - beforeTime));
+	        logger.info("total row count = " + repo.count());
 		}
     }    
     
@@ -73,7 +77,7 @@ public class ClimateService {
     	if(condition == null || condition.isEmpty())
     	{
     		String error = "ClimateService:filterByDate: condition is required";
-    		System.out.println(error);
+    		logger.error(error);
     		throw new Exception(error);
     	}
     	Date date1 = null;
@@ -90,14 +94,14 @@ public class ClimateService {
     	}catch(Exception e)
     	{
     		String error = "ClimateService:filterByDate: Exception parsing date value, expected Date format is: YYYY-MM-DD";
-    		System.err.println(error);
+    		logger.error(error);
     		throw new Exception(error);
     	}
     	System.out.println("ClimateService:filterByDate: condition=" + condition + "; date1=" + date1 + "; date2=" + date2); 
     	if(date1 == null)
 		{
      		String error = "ClimateService:filterByDate: date value is required.";
-     		System.err.println(error);
+     		logger.error(error);
      		throw new Exception(error);
 		}
     	switch(condition.toLowerCase())
@@ -116,18 +120,18 @@ public class ClimateService {
     		  else
     		  {
     			  String error = "ClimateService:filterByDate: 'betweeen' condition requires from and to date.";  
-    	     	  System.err.println(error);
+    			  logger.error(error);
     	     	  throw new Exception(error);
     		  }
     		  break;
     	  default:
     	  {
     		  String error = "ClimateService:filterByDate: condition not supported, expected value is following: before, after, between.";
-       	      System.err.println(error);
+    		  logger.error(error);
        		  throw new Exception(error);
     	  }
     	}
-    	System.out.println("ClimateService:filterByDate: total fetched row count = " + filteredList.size());
+    	logger.info("ClimateService:filterByDate: total fetched row count = " + filteredList.size());
     	
     	//DEBUG
     	//int dateCount = repo.finaDistinctDateValues();

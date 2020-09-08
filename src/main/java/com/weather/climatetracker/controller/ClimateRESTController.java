@@ -9,7 +9,8 @@ import com.weather.climatetracker.service.ClimateService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 public class ClimateRESTController {
-
+	Logger logger = LoggerFactory.getLogger(ClimateRESTController.class);
 	@Autowired
 	private ClimateService service;
     
@@ -28,7 +29,7 @@ public class ClimateRESTController {
             @RequestParam(name = "date1", required = false, defaultValue="")String value1,  
             @RequestParam(name = "date2", required = false, defaultValue="")String value2) throws Exception {
     	List<ClimateData> climateDataListFiltered = new ArrayList<ClimateData>();
-    	System.out.println("ClimateRESTController:summaryList:condition=" + condition + "; date1=" + value1 + "; date2=" + value2); 
+    	logger.info("ClimateRESTController:summaryList:condition=" + condition + "; date1=" + value1 + "; date2=" + value2); 
     	if(condition.isEmpty() || value1.isEmpty())
     	{
     		climateDataListFiltered = service.listAll(); 
@@ -39,7 +40,7 @@ public class ClimateRESTController {
     	{
     		//log error
     		String error = "REST: condition " + condition + " is not supported. Valid ones are: 'before', 'after', 'between'.";
-    		System.out.println(error);
+    		logger.error(error);
     		throw new ResponseStatusException(
     		          HttpStatus.BAD_REQUEST, error, new Exception());
     	}
@@ -51,7 +52,7 @@ public class ClimateRESTController {
     			   (value2==null || value2.isEmpty()))
     			{
     			    String error = "REST: invalid request: criteria date with condition 'between' expects inputs for both date1 and date2.";
-    				System.out.println(error);
+    			    logger.error(error);
     				throw new ResponseStatusException(
     	    		          HttpStatus.BAD_REQUEST, error, new Exception());
     			}
